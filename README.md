@@ -1,42 +1,42 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+- Först tillades en knapp i main screen, vilken också fick en button listener i Main activity.    
+- Därefter skapades en ny activity vilken gjordes med "Intent" (se kod nedan), 
+  hur knapptryckningen registrerades har även ändrades efter hur detta utförs i av [Android developer](https://developer.android.com/training/basics/firstapp/starting-activity)
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
-```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+``
+Intent intent = new Intent(this, SecondActivity.class);
+startActivity(intent);
+``
+  
+- Nästa del i projectet var att "överföra" data mellan de olika skärmarna, 
+  här fastställdes då även vad själva syftet med projectet skulle vara, vilket blev att matta in ett namn vilket senare skulle änvändas på nästa skärm. (se bilder)  
+- Detta gjordes då genom att ta input ifrån en editText widget och sedan använda ``putExtra("name", message)`` för att det ska integreras med intent och gå att nås i nästa activity. (se kod nedan)
+- Senare skapade även if-sats vilken kollar ifall meddelandet är tomt, om det är tomt så påmins användaren om att skriva ett namn. (se kod nedan och bilder)   
+``
+  public void new_activity(View v) {
+    Intent intent = new Intent(this, SecondActivity.class);
+    EditText editText = (EditText) findViewById(R.id.name);
+    String message = editText.getText().toString();
+    if(TextUtils.isEmpty(message)) {
+      editText.setError("This field can not be empty");
+      return;
     }
-}
-```
+    intent.putExtra("name", message);
+    startActivity(intent);
+  }
+``
 
-Bilder läggs i samma mapp som markdown-filen.
+- I second activity används sedan koden nedan för att komma åt och visa meddelandet i en textView (se bilder)    
 
-![](android.png)
+``
+  Bundle extras = getIntent().getExtras();
+  String message = getString(R.string.hi)+ " " + extras.getString("name") + "!";
+  TextView textView = findViewById(R.id.textView);
+  textView.setText(message);  
+``
 
-Läs gärna:
-
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+![](Screenshot_form.png)
+![](Screenshot_Second_Activity.png)
+![](Screenshot_error.png)
