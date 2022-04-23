@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Screens</string>
-    <string name="second_activity">Second activity</string>
     <string name="new_activity">Submit</string>
     <string name="what_is_your_name">What is your name?</string>
-    <string name="null_name">Submitting a name would make it easier to say Hi</string>
-    <string name="hi">\"Hi \"</string>
+    <string name="hi">Hi</string>
+    <string name="hi_message">Hi message</string>
 </resources>
